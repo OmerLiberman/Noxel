@@ -1,0 +1,18 @@
+export const FETCH_TODAY_MEALS = 'FETCH_TODAY_MEALS';
+export const FETCH_WEEKLY_MEALS = 'FETCH_WEEKLY_MEALS';
+/////
+export const FETCH_TODAY_SIDES = 'FETCH_TODAY_SIDES';
+export const FETCH_WEEKLY_SIDES = 'FETCH_WEEKLY_SIDES';
+/////
+export const USER_LOADED = 'USER_LOADED';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+/////
+export const CLASSROOMS_NUM = 'CLASSROOMS_NUM';
+export const CLASSROOMS_NUM_ERROR = 'CLASSROOMS_NUM_ERROR';
+export const KIDS_NUM = 'KIDS_NUM';
+export const KIDS_NUM_ERROR = 'KIDS_NUM_ERROR';
+export const SCHOOLS_NUM = 'SCHOOLS_NUM';
+export const SCHOOLS_NUM_ERROR = 'SCHOOLS_NUM_ERROR';
