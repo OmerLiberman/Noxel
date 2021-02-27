@@ -15,7 +15,7 @@ import Dashboard from "../views/Dashboard/Dashboard";
 import { NotFound } from "../views/NotFound/NotFound";
 import Classrooms from "../views/Clients/views/Classrooms/Classrooms";
 import Schools from "../views/Clients/views/Schools/Schools";
-import Payers from "../views/Clients/views/Payers";
+import Payers from "../views/Clients/views/Payers/Payers";
 
 // import MainLayout from '../layouts/MainLayout';
 

@@ -23,7 +23,7 @@ const School = new Schema({
     {
       type: mongoose.Types.ObjectId,
       required: false,
-      ref: 'ClassRoom',
+      ref: 'Classroom',
     }],
 }, {timestamps: true});
 

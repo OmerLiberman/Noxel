@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import Classrooms from './views/Classrooms/Classrooms';
 import Schools from './views/Schools/Schools';
-import Payers from './views/Payers';
+import Payers from './views/Payers/Payers';
 
 
 const Clients = () => {

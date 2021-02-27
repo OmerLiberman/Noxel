@@ -4,12 +4,12 @@ import axios from "axios";
 
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import CodeIcon from '@material-ui/icons/Code';
-import PersonIcon from '@material-ui/icons/Person';
+import CodeIcon from "@material-ui/icons/Code";
+import PersonIcon from "@material-ui/icons/Person";
 import Grid from "@material-ui/core/Grid";
 
 import MaterialTable from "material-table";
-
+import { replaceName } from "../../../../utils/strings";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,66 +52,64 @@ const Classrooms = () => {
       });
   };
 
-  const replaceUnderScores = (s) => {
-    return s.replace(/-/g, " ");
-  };
-
-  const getSingleDayMenu = (day) => {
-
-  }
-
   const columns = [
     {
-      title: <div>
-        <center> <CodeIcon/> </center>
-      </div>,
+      title: (
+        <div>
+          <CodeIcon />
+        </div>
+      ),
       field: "code",
-      render: ({code}) =>
-          <Grid container direction='column' alignItems='center'>
-            <Grid item> {code} </Grid>
-          </Grid>
+      render: ({ code }) => (
+        <Grid container direction="column" alignItems="flex-start">
+          <Grid item> {code} </Grid>
+        </Grid>
+      ),
     },
     {
       title: "כיתה",
       width: "10%",
-      render: ({hebName,hebAddress}) => {
-        return <Grid container direction='column' alignItems='center'>
-          <Grid item>
-            <Typography> {replaceUnderScores(hebName)} </Typography>
+      render: ({ hebName, hebAddress }) => {
+        return (
+          <Grid container direction="column" alignItems="flex-start">
+            <Grid item>
+              <Typography> {replaceName(hebName)} </Typography>
+            </Grid>
+            <Grid item>{replaceName(hebAddress)}</Grid>
           </Grid>
-          <Grid item>
-            {replaceUnderScores(hebAddress)}
-          </Grid>
-        </Grid>
-      }
+        );
+      },
     },
     {
-      title: <div>
-        <PersonIcon/>
-      </div>,
+      title: (
+        <div>
+          <PersonIcon />
+        </div>
+      ),
       field: "kids",
       width: "5%",
-      render: ({kids}) =>
-          <Grid container direction='column' alignItems='center'>
-            <Grid item> {kids} </Grid>
-          </Grid>
+      render: ({ kids }) => (
+        <Grid container direction="column" alignItems="flex-start">
+          <Grid item> {kids} </Grid>
+        </Grid>
+      ),
     },
     {
       title: "יום א",
       width: "10%",
       render: ({ usualWeeklyMenu, usualWeeklySides }) => {
         return (
-          <Grid container direction='column' alignItems='flex-start'>
-              <b> מזון חם</b>
-              {usualWeeklyMenu &&
+          <Grid container direction="column" alignItems="flex-start">
+            <b> מזון חם</b>
+            {usualWeeklyMenu &&
               usualWeeklyMenu.Sun &&
               usualWeeklyMenu.Sun.meals.map((meal) => {
-                return <Grid item> - {replaceUnderScores(meal.hebName)} </Grid>;
+                return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
-              <b> תוספות </b>
-              {usualWeeklySides &&
+            <b> תוספות </b>
+            {usualWeeklySides &&
               usualWeeklySides.Sun.map((side) => {
-                return <Grid item> - {replaceUnderScores(side.hebName)} </Grid>;
+                return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
         );
@@ -122,17 +120,17 @@ const Classrooms = () => {
       width: "10%",
       render: ({ usualWeeklyMenu, usualWeeklySides }) => {
         return (
-            <Grid container direction='column' alignItems='flex-start'>
+          <Grid container direction="column" alignItems="flex-start">
             <b>מזון חם</b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Mon &&
               usualWeeklyMenu.Mon.meals.map((meal) => {
-                return <Grid iten> - {replaceUnderScores(meal.hebName)} </Grid>;
+                return <Grid iten> - {replaceName(meal.hebName)} </Grid>;
               })}
             <b>תוספות</b>
             {usualWeeklySides &&
               usualWeeklySides.Mon.map((side) => {
-                return <Grid item> - {replaceUnderScores(side.hebName)} </Grid>;
+                return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
         );
@@ -143,17 +141,17 @@ const Classrooms = () => {
       width: "10%",
       render: ({ usualWeeklyMenu, usualWeeklySides }) => {
         return (
-            <Grid container direction='column' alignItems='flex-start'>
+          <Grid container direction="column" alignItems="flex-start">
             <b> מזון חם</b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Tue &&
               usualWeeklyMenu.Tue.meals.map((meal) => {
-                return <Grid item> - {replaceUnderScores(meal.hebName)} </Grid>;
+                return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
             <b> תוספות</b>
             {usualWeeklySides &&
               usualWeeklySides.Tue.map((side) => {
-                return <Grid item> - {replaceUnderScores(side.hebName)} </Grid>;
+                return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
         );
@@ -164,17 +162,17 @@ const Classrooms = () => {
       width: "10%",
       render: ({ usualWeeklyMenu, usualWeeklySides }) => {
         return (
-            <Grid container direction='column' alignItems='flex-start'>
+          <Grid container direction="column" alignItems="flex-start">
             <b> מזון חם</b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Wed &&
               usualWeeklyMenu.Wed.meals.map((meal) => {
-                return <Grid item> - {replaceUnderScores(meal.hebName)} </Grid>;
+                return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
             <b> תוספות </b>
             {usualWeeklySides &&
               usualWeeklySides.Wed.map((side) => {
-                return <Grid item> - {replaceUnderScores(side.hebName)} </Grid>;
+                return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
         );
@@ -185,39 +183,31 @@ const Classrooms = () => {
       width: "10%",
       render: ({ usualWeeklyMenu, usualWeeklySides }) => {
         return (
-            <Grid container direction='column' alignItems='flex-start'>
-           <b> מזון חם </b>
+          <Grid container direction="column" alignItems="flex-start">
+            <b> מזון חם </b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Thu &&
               usualWeeklyMenu.Thu.meals.map((meal) => {
-                return <Grid item> - {replaceUnderScores(meal.hebName)} </Grid>;
+                return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
-             <b> תוספות </b>
+            <b> תוספות </b>
             {usualWeeklySides &&
               usualWeeklySides.Thu.map((side) => {
-                return <Grid item> - {replaceUnderScores(side.hebName)} </Grid>;
+                return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
         );
       },
     },
-    // {
-    //   title: "שינוים",
-    //   field: "changes",
-    //   render: ({changes}) =>
-    //       <Grid container direction='column' alignItems='center'>
-    //         <Grid item> {changes && changes.length} </Grid>
-    //       </Grid>
-    // },
   ];
 
   const options = {
-    exportButton: true,
+    exportButton: false,
     headerStyle: {
-      textAlign: 'right'
+      textAlign: "right",
     },
     initialPage: 1,
-    pageSize: 10,
+    pageSize: 5,
     pageSizeOptions: false,
     paginationType: "stepped",
     showTitle: false,

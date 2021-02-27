@@ -25,27 +25,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Classrooms = () => {
+const Payers = () => {
   const classes = useStyles();
 
   const [message] = useState("");
-  const [schools, setSchools] = useState([]);
+  const [payers, setPayers] = useState([]);
 
   useEffect(() => {
-    if (schools.length === 0) {
-      getSchools();
+    if (payers.length === 0) {
+      getPayers();
     }
   }, []);
 
-  const getSchools = async () => {
+  const getPayers = async () => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_URI}/api/clients/schools`)
+      .get(`${process.env.REACT_APP_SERVER_URI}/api/clients/payers`)
       .then((res) => {
-        let schoolsArray = [];
-        res.data.schools.forEach((school) => {
-          schoolsArray.push(school);
+        let payersArray = [];
+        res.data.payers.forEach((payer) => {
+          payersArray.push(payer);
         });
-        setSchools(schoolsArray);
+        setPayers(payersArray);
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +69,7 @@ const Classrooms = () => {
       ),
     },
     {
-      title: "מוסד",
+      title: "משלם",
       width: "10%",
       render: ({ hebName, hebAddress }) => {
         return (
@@ -83,32 +83,28 @@ const Classrooms = () => {
       },
     },
     {
-      title: "משלם",
-      width: "10%",
-      render: ({ payer }) => {
-        return (
-          <Grid container direction="column" alignItems="flex-start">
-            <Grid item>
-              <Typography> {replaceName(payer && payer.hebName)} </Typography>
-            </Grid>
-            <Grid item>{replaceName(payer && payer.hebAddress)}</Grid>
-          </Grid>
-        );
-      },
-    },
-    {
       title: (
         <div>
           <PersonIcon />
         </div>
       ),
-      //field: "kids",
       width: "5%",
-      render: ({ classrooms }) => {
+      render: ({ classrooms, schools }) => {
         let kids = 0;
-        classrooms.forEach((classroom) => {
-          kids += classroom.kids;
-        });
+
+        if (classrooms) {
+          classrooms.forEach((classroom) => {
+            kids += classroom.kids;
+          });
+        }
+
+        if (schools) {
+          schools.forEach((school) => {
+            school.classrooms.forEach((classroom) => {
+              kids += classroom.kids;
+            });
+          });
+        }
 
         return (
           <Grid container direction="column" alignItems="flex-start">
@@ -118,14 +114,48 @@ const Classrooms = () => {
       },
     },
     {
-      title: "כיתות",
-      field: "classrooms",
-      render: ({ classrooms }) => {
+      title: "מספר כיתות כולל",
+      width: "10%",
+      render: ({ classrooms, schools }) => {
+
+        let numOfClassrooms = 0;
+        numOfClassrooms += classrooms.length;
+
+        schools.forEach(school => {
+          numOfClassrooms += school.classrooms.length;
+        })
+
+        return (
+            <Grid container direction="column" alignItems="flex-start">
+              <Grid item> {numOfClassrooms} </Grid>
+            </Grid>
+        );
+      },
+    },
+    {
+      title: "בתי ספר",
+      field: "schools",
+      render: ({ schools }) => {
         return (
           <Grid container direction="column" alignItems="flex-start">
-            {classrooms.map((classroom, index) => {
-              return <Grid item>{replaceName(classroom.hebName)}</Grid>;
+            {schools.map((school, index) => {
+              let result = `${school.hebName} (${school.classrooms.length} כיתות)`
+              return <Grid item>{replaceName(result)}</Grid>;
             })}
+          </Grid>
+        );
+      },
+    },
+    {
+      title: "כיתות מחוץ לבתי ספר",
+      render: ({ classrooms, schools }) => {
+        return (
+          <Grid container direction="column" alignItems="flex-start">
+            <Grid container direction='column' alignItems='flex-start'>
+              {classrooms.map((classroom, index) => {
+                return <Grid item> {replaceName(classroom.hebName)}</Grid>;
+              })}
+            </Grid>
           </Grid>
         );
       },
@@ -157,7 +187,7 @@ const Classrooms = () => {
         }}
       >
         <div style={{ textAlign: "right" }}>
-          <Typography variant="h4">{"בתי ספר"}</Typography>
+          <Typography variant="h4">{"משלמים"}</Typography>
         </div>
 
         <div>
@@ -165,13 +195,13 @@ const Classrooms = () => {
             variant="outlined"
             style={{ backgroundColor: "#012345", color: "white" }}
           >
-            {"הוסף בית ספר"}
+            {"הוסף משלם"}
           </Button>
         </div>
       </div>
       <MaterialTable
         columns={columns}
-        data={schools}
+        data={payers}
         style={{ direction: "rtl", color: "#012345" }}
         options={options}
       />
@@ -179,4 +209,4 @@ const Classrooms = () => {
   );
 };
 
-export default Classrooms;
+export default Payers;
