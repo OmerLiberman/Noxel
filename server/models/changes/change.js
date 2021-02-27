@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema = mongoose.Schema;
 
 const Change = new Schema({
@@ -8,9 +9,8 @@ const Change = new Schema({
   handled: {type: Boolean, default: false},
   status: {type: String, default: 'nothandled'},
   changeType: {type: String, default: 'onetime'}, // can also be 'permanent'
-  description: {type: String, default: ''},
-  newMenu: {type: Schema.Types.ObjectId, ref: 'Menu'},
-  oneTimeMenu: {type: Schema.Types.ObjectId, ref: 'Menu'}
+  description: { type: String }
 }, {timestamps: true});
 
+Change.plugin(AutoIncrement, { inc_field: 'changeId' });
 module.exports = mongoose.model('change', Change);

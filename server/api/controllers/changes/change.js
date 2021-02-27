@@ -1,19 +1,19 @@
-const Change = require('../../../models/changes/change');
+const Change = require("../../../models/changes/change");
 
 const getAll = async (request, response) => {
   let allChanges = null;
   try {
     allChanges = await Change.find({})
-        .populate({path: 'classroom', select: 'hebName'})
-        .populate({path: 'newMenu', select: 'hebName'})
-        .populate({path: 'oneTimeMenu', select: 'hebName'});
+      .populate({ path: "classroom", select: "hebName" })
+      .populate({ path: "newMenu", select: "hebName" })
+      .populate({ path: "oneTimeMenu", select: "hebName" });
   } catch (err) {
-    return response.status(500).json({message: err.message});
+    return response.status(500).json({ message: err.message });
   }
   if (!allChanges) {
-    return response.status(404).json({message: 'No changes are available.'});
+    return response.status(404).json({ message: "No changes are available." });
   }
-  return response.status(200).json({changes: allChanges});
+  return response.status(200).json({ changes: allChanges });
 };
 
 const getById = async (request, response) => {
@@ -22,26 +22,32 @@ const getById = async (request, response) => {
   try {
     menuChangeJob = await Change.findById(id);
   } catch (err) {
-    return response.status(500).json({message: 'An error has been occurred.'});
+    return response
+      .status(500)
+      .json({ message: "An error has been occurred." });
   }
   if (!menuChangeJob) {
-    return response.status(404).json({message: 'menuChangeJob was not found.'});
+    return response
+      .status(404)
+      .json({ message: "menuChangeJob was not found." });
   }
-  return response.status(200).
-      json({menuChangeJob: menuChangeJob.toObject({getters: true})});
+  return response
+    .status(200)
+    .json({ menuChangeJob: menuChangeJob.toObject({ getters: true }) });
 };
 
 const create = async (request, response) => {
   const values = request.body;
-  const change = await new Change({...values});
+  const change = await new Change({ ...values });
 
   try {
     await change.save();
   } catch (err) {
-    return response.status(500).json({err: err.message});
+    return response.status(500).json({ err: err.message });
   }
-  return response.status(201).
-      json({change: change.toObject({getters: true})});
+  return response
+    .status(201)
+    .json({ change: change.toObject({ getters: true }) });
 };
 
 const update = async (request, response) => {
@@ -52,10 +58,14 @@ const update = async (request, response) => {
   try {
     menuChangeJob = await Change.findById(id);
   } catch (err) {
-    return response.status(500).json({message: 'An error has been occurred.'});
+    return response
+      .status(500)
+      .json({ message: "An error has been occurred." });
   }
   if (!menuChangeJob) {
-    return response.status(404).json({message: 'menuChangeJob was not found.'});
+    return response
+      .status(404)
+      .json({ message: "menuChangeJob was not found." });
   }
 
   for (const [key, value] of Object.entries(values)) {
@@ -65,10 +75,70 @@ const update = async (request, response) => {
   try {
     await menuChangeJob.save();
   } catch (err) {
-    return console.log("Error was occurred.")
+    return console.log("Error was occurred.");
   }
 
-  response.status(200).json({menuChangeJob: menuChangeJob.toObject({getters: true})});
+  response
+    .status(200)
+    .json({ menuChangeJob: menuChangeJob.toObject({ getters: true }) });
+};
+
+const resolve = async (request, response) => {
+  const id = request.params.id;
+
+  let change = null;
+  try {
+    change = await Change.findByIdAndUpdate(id, {
+      handled: true,
+      status: "resolved",
+    });
+  } catch (err) {
+    return response
+      .status(500)
+      .json({ message: "An error has been occurred." });
+  }
+  if (!change) {
+    return response
+      .status(404)
+      .json({ message: "change was not found." });
+  }
+
+  try {
+    await change.save();
+  } catch (err) {
+    return console.log("Error was occurred.");
+  }
+
+  response.status(200).json({ change: change.toObject({ getters: true }) });
+};
+
+const block = async (request, response) => {
+  const id = request.params.id;
+
+  let change = null;
+  try {
+    change = await Change.findByIdAndUpdate(id, {
+      handled: true,
+      status: "denied",
+    });
+  } catch (err) {
+    return response
+    .status(500)
+    .json({ message: "An error has been occurred." });
+  }
+  if (!change) {
+    return response
+    .status(404)
+    .json({ message: "change was not found." });
+  }
+
+  try {
+    await change.save();
+  } catch (err) {
+    return console.log("Error was occurred.");
+  }
+
+  response.status(200).json({ change: change.toObject({ getters: true }) });
 };
 
 const remove = async (request, response) => {
@@ -78,23 +148,28 @@ const remove = async (request, response) => {
   try {
     menuChangeJob = await Change.findById(id);
   } catch (err) {
-    return response.status(500).json({message: 'An error has been occurred.'});
+    return response
+      .status(500)
+      .json({ message: "An error has been occurred." });
   }
   if (!menuChangeJob) {
-    return response.status(404).json({message: 'Object was not found.'});
+    return response.status(404).json({ message: "Object was not found." });
   }
 
   try {
     await menuChangeJob.delete();
   } catch (err) {
-    return console.log("Error was occurred.")
+    return console.log("Error was occurred.");
   }
 
-  response.status(200).json({message: "Object was deleted successfully."});
+  response.status(200).json({ message: "Object was deleted successfully." });
 };
 
 exports.getAll = getAll;
 exports.getById = getById;
 exports.create = create;
 exports.update = update;
+exports.resolve = resolve;
+exports.block = block;
 exports.remove = remove;
+

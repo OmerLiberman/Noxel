@@ -16,6 +16,9 @@ export const Changes = () => {
     asyncCall();
   }, []);
 
+  // useEffect(() => {
+  // }, [allChanges]);
+
   const fetchAllChanges = async () => {
     await axios.get(`${process.env.REACT_APP_SERVER_URI}/api/changes`).then(res => {
           setAllChanges(res.data.changes);
@@ -27,6 +30,37 @@ export const Changes = () => {
           console.error(err.message);
         });
   };
+
+  const handleDeleteChange = async (changeMongoId) => {
+    await axios.delete(`${process.env.REACT_APP_SERVER_URI}/api/changes/${changeMongoId}`).then(res => {
+      let newChanges = allChanges.filter(change => change._id !== changeMongoId);
+      setAllChanges(newChanges);
+    }).catch(err => {
+      setMessage('An error has been occurred.');
+      console.error(err.message);
+    });
+  }
+
+  const handleResolveClick = async (changeMongoId) => {
+    await axios.patch(`${process.env.REACT_APP_SERVER_URI}/api/changes/resolve/${changeMongoId}`).then(res => {
+      let newChanges = allChanges.filter(change => change._id !== changeMongoId);
+      newChanges.push(res.data.change);
+      setAllChanges(newChanges);
+    }).catch(err => {
+      setMessage('An error has been occurred.');
+      console.error(err.message);
+    });
+  }
+
+  const handleBlockClick = async (changeMongoId) => {
+    await axios.patch(`${process.env.REACT_APP_SERVER_URI}/api/changes/block/${changeMongoId}`).then(res => {
+      let newChanges = allChanges.filter(change => change._id !== changeMongoId);
+      newChanges.push(res.data.change);
+      setAllChanges(newChanges);
+    }).catch(err => {
+      setMessage('An error has been occurred.');
+      console.error(err.message);
+    });  }
 
   return <div>
     <div style={{textAlign: 'right'}}>
@@ -42,10 +76,15 @@ export const Changes = () => {
                 allChanges.map(change =>
                     <div style={{padding: '4px'}}>
                       <Change
-                          changeId={change._id}
+                          changeMongoId={change._id}
+                          changeId={change.changeId}
+                          handled={change.handled}
                           status={change.status}
                           changeType={change.changeType}
                           description={change.description}
+                          handleDeleteClick={handleDeleteChange}
+                          handleResolveClick={handleResolveClick}
+                          handleBlockClick={handleBlockClick}
                       />
                   </div>
                 )

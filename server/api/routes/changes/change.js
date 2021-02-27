@@ -13,6 +13,10 @@ router.post('/', Change.create);
 
 router.patch('/:id', Change.update);
 
+router.patch('/resolve/:id', Change.resolve);
+
+router.patch('/block/:id', Change.block);
+
 router.delete('/:id', Change.remove);
 
 module.exports = router;
