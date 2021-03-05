@@ -2,15 +2,13 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import { CardHeader } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 
 import { getBackgroundColor, textColor } from "../../../utils/colors";
 import Spinner from "../../../components/Spinner/Spinner";
 import { BarChart } from "../../../components/BarChart/BarChart";
+import {replaceName} from '../../../utils/strings';
 
 const useStyles = makeStyles({
   root: {
@@ -33,7 +31,7 @@ const WeeklyMenu = ({ weeklyMenu, loading }) => {
   let amounts = [];
 
   for (const [k, v] of Object.entries(weeklyMenu)) {
-    labels.push(k);
+    labels.push(replaceName(k));
     amounts.push(v);
   }
 
@@ -58,12 +56,6 @@ const WeeklyMenu = ({ weeklyMenu, loading }) => {
             <BarChart labelsArray={labels} amountsArray={amounts} />
           )}
         </CardContent>
-
-        <CardActions style={{ justifyContent: "center" }}>
-          <Button size="small" variant="outlined">
-            ראה פירוט
-          </Button>
-        </CardActions>
       </Card>
     </div>
   );

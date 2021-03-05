@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import Header from '../../components/Header/Header';
 import axios from 'axios';
 import Spinner from '../../components/Spinner/Spinner';
-import DriversAndClassesDragAndDrop from './DriversAndClassesDragAndDrop';
 import {Typography} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import ClassesTranserList from './ClassesTranserList';
 
 const Drivers = () => {
   const [loading, setLoading] = useState(true);
@@ -73,7 +70,7 @@ const Drivers = () => {
           loading ?
               <Spinner/>
               :
-              <ClassesTranserList allClassrooms={classrooms}/>
+              <div>{' '}</div>
         }
       </Grid>
   );

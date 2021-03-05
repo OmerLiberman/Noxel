@@ -168,17 +168,17 @@ const getTotalsByWeek = async (request, response) => {
           populate({ path: `usualWeeklyMenu.${dayInWeek}`, populate: { path: 'meals' }
           });
 
-      const mealsAndAmounts = {};
-      classrooms.forEach(classroom => {
+      for (const classroom of classrooms) {
         const kids = classroom.kids;
-        classroom.usualWeeklyMenu[dayInWeek].meals.forEach(meal => {
-          if (meal in mealsAndAmounts) {
+        const dailyMeals = classroom.usualWeeklyMenu[dayInWeek].meals;
+        for (const meal of dailyMeals) {
+          if (meal.hebName in weeklyMenuByMealsAndAmounts) {
             weeklyMenuByMealsAndAmounts[meal.hebName] += kids;
           } else {
             weeklyMenuByMealsAndAmounts[meal.hebName] = kids;
           }
-        });
-      });
+        }
+      }
     }
 
     response.status(200).json({weeklyReport: weeklyMenuByMealsAndAmounts});

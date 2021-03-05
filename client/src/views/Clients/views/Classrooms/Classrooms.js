@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 
 import MaterialTable from "material-table";
 import { replaceName } from "../../../../utils/strings";
+import PaginationWrapper from "../../../../components/Pagination/PaginationWrapper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,12 +104,12 @@ const Classrooms = () => {
             <b> מזון חם</b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Sun &&
-              usualWeeklyMenu.Sun.meals.map((meal) => {
+              usualWeeklyMenu.Sun.meals.map((meal, key) => {
                 return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
             <b> תוספות </b>
             {usualWeeklySides &&
-              usualWeeklySides.Sun.map((side) => {
+              usualWeeklySides.Sun.map((side, key) => {
                 return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
@@ -124,12 +125,12 @@ const Classrooms = () => {
             <b>מזון חם</b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Mon &&
-              usualWeeklyMenu.Mon.meals.map((meal) => {
-                return <Grid iten> - {replaceName(meal.hebName)} </Grid>;
+              usualWeeklyMenu.Mon.meals.map((meal, key) => {
+                return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
             <b>תוספות</b>
             {usualWeeklySides &&
-              usualWeeklySides.Mon.map((side) => {
+              usualWeeklySides.Mon.map((side, key) => {
                 return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
@@ -145,12 +146,12 @@ const Classrooms = () => {
             <b> מזון חם</b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Tue &&
-              usualWeeklyMenu.Tue.meals.map((meal) => {
+              usualWeeklyMenu.Tue.meals.map((meal, key) => {
                 return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
             <b> תוספות</b>
             {usualWeeklySides &&
-              usualWeeklySides.Tue.map((side) => {
+              usualWeeklySides.Tue.map((side, key) => {
                 return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
@@ -166,12 +167,12 @@ const Classrooms = () => {
             <b> מזון חם</b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Wed &&
-              usualWeeklyMenu.Wed.meals.map((meal) => {
+              usualWeeklyMenu.Wed.meals.map((meal, key) => {
                 return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
             <b> תוספות </b>
             {usualWeeklySides &&
-              usualWeeklySides.Wed.map((side) => {
+              usualWeeklySides.Wed.map((side, key) => {
                 return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
@@ -187,12 +188,12 @@ const Classrooms = () => {
             <b> מזון חם </b>
             {usualWeeklyMenu &&
               usualWeeklyMenu.Thu &&
-              usualWeeklyMenu.Thu.meals.map((meal) => {
+              usualWeeklyMenu.Thu.meals.map((meal, key) => {
                 return <Grid item> - {replaceName(meal.hebName)} </Grid>;
               })}
             <b> תוספות </b>
             {usualWeeklySides &&
-              usualWeeklySides.Thu.map((side) => {
+              usualWeeklySides.Thu.map((side, key) => {
                 return <Grid item> - {replaceName(side.hebName)} </Grid>;
               })}
           </Grid>
@@ -208,7 +209,7 @@ const Classrooms = () => {
     },
     initialPage: 1,
     pageSize: 5,
-    pageSizeOptions: false,
+    pageSizeOptions: [],
     paginationType: "stepped",
     showTitle: false,
   };
@@ -243,6 +244,10 @@ const Classrooms = () => {
         data={classrooms}
         style={{ direction: "rtl", color: "#012345" }}
         options={options}
+        components={{
+          Pagination: (props) => <PaginationWrapper />,
+          Toolbar: () => ''
+        }}
       />
     </div>
   );

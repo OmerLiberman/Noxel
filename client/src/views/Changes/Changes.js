@@ -92,7 +92,6 @@ export const Changes = () => {
             </div>
           :
           <div>
-            here
             {
               message ?
                   <div> לא נמצאו בקשות או שינוים. </div>

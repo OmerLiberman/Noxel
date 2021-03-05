@@ -10,6 +10,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import MaterialTable from "material-table";
 import Grid from "@material-ui/core/Grid";
 import { replaceName } from "../../../../utils/strings";
+import PaginationWrapper
+  from '../../../../components/Pagination/PaginationWrapper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -174,6 +176,10 @@ const Classrooms = () => {
         data={schools}
         style={{ direction: "rtl", color: "#012345" }}
         options={options}
+        components={{
+          Pagination: (props) => <PaginationWrapper/>,
+          Toolbar: () => ''
+        }}
       />
     </div>
   );

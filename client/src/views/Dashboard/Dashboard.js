@@ -33,6 +33,7 @@ const Dashboard = ({
   fetchSchoolsNum,
   weeklyMealsMenu,
   fetchWeeklyMeals,
+  username
 }) => {
   const [loading, setLoading] = useState(true);
 
@@ -77,7 +78,7 @@ const Dashboard = ({
   return (
     <div style={{ direction: "rtl" }}>
       <center>
-        <DateDisplay />
+        <DateDisplay name={username}/>
       </center>
       <Grid
         container
@@ -89,7 +90,7 @@ const Dashboard = ({
         }}
       >
         <Grid item xl={3} lg={3} md={3} sm={6} xs={6}>
-          <DateDisplayCard />
+          <DateDisplayCard name={username}/>
         </Grid>
         <Grid item xl={3} lg={3} md={3} sm={6} xs={6}>
           <NumberDisplayCard
@@ -180,6 +181,7 @@ Dashboard.propTypes = {
   fetchSchoolsNum: PropTypes.func.isRequired,
   weeklyMealsMenu: PropTypes.object,
   fetchWeeklyMeals: PropTypes.func.isRequired,
+  username: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
@@ -189,6 +191,7 @@ const mapStateToProps = (state) => ({
   kidsNum: state.stats.kids,
   classroomsNum: state.stats.classrooms,
   schoolsNum: state.stats.schools,
+  username: state.auth && state.auth.user && state.auth.user.username
 });
 
 export default connect(mapStateToProps, {

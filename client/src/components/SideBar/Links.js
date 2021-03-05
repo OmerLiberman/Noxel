@@ -25,7 +25,7 @@ const routes = [
   {key: 'משלמים', route: '/clients/payers'},
   // {key: 'נהגים', route: '/drivers'},
   {key: 'שינוים ובקשות', route: '/changes'},
-  {key: 'דוחות', route: '/reports'},
+  // {key: 'דוחות', route: '/reports'},
 ]
 
 
@@ -36,8 +36,8 @@ const Links = () => {
       <List style={{direction: 'rtl'}}>
         <center>
           {
-            routes.map((routeData, index) => {
-              return <ListItem>
+            routes.map((routeData, key) => {
+              return <ListItem key={key}>
                 <Button
                     className={classes.button}
                     href={routeData.route}

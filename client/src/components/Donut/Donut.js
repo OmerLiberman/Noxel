@@ -13,7 +13,7 @@ export const Donut = ({labelsArray, amountsArray}) => {
       }}
       series={amountsArray}
       type="donut"
-      height="200"
+      height="350"
   />;
 
 };

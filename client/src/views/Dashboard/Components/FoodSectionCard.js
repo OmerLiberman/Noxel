@@ -14,7 +14,7 @@ import Spinner from '../../../components/Spinner/Spinner';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    height: 320,
+    height: 410,
   },
   title: {
     fontSize: 14,
